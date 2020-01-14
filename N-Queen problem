@@ -2,12 +2,14 @@
 #include <bits/stdc++.h>
 using namespace std;
 bool issafe(int B[][10],int i,int j,int n){
+   //check for the same column
     for(int r=0;r<n;r++){
         if(B[r][j]==1)
         return false;
     }
     int x=i;
     int y=j;
+    //check for left diagonal
     while(x>=0 && y>=0){
         if(B[x][y]==1){
             return false;
@@ -16,30 +18,38 @@ bool issafe(int B[][10],int i,int j,int n){
         y--;
     }
     x=i;y=j;
+    //check for right diagonal
     while(x>=0 && y<n){
         if(B[x][y]==1)
         return false;
         x--;
         y++;
     }
+    //if queen is placed at correct position then return true
 return true;
 }
 bool NQueen(int B[][10],int i,int n){
+// if all queen are placed at correct position , print the board;
     if(i==n){
         cout<<"[";
         for(int j=0;j<n;j++){
             for(int k=0;k<n;k++){
                 if(B[j][k]==1){
-                cout<<k+1<<" ";
+                cout<<"Q"<<" ";
+                else
+                cout<<" _ ";
             }
+            cout<<endl;
         }
        
     }
         cout<<"] "; 
  
-        return true;
+        return false;
     }
     for(int j=0;j<n;j++){
+    // we have to check that we can place queen in i,j position or not;
+		//assume that i,j is right position of queen;
         if(issafe(B,i,j,n)){
             B[i][j]=1;
 
@@ -47,25 +57,19 @@ bool NQueen(int B[][10],int i,int n){
             if(nextQ){
                 return true;
             }
+            //this shows that i and j are not correct place for ith queen;
+            //we have to backtrack;
             B[i][j]=0;
         }
     }
+   //
 return false;
 }
-void solveNQ(int n){
-      int B[10][10]={0};
-  
-    if (NQueen(B,0,n) == false) 
-    { 
-        cout<<"-1"; 
-        return ; 
-    } 
-  
-    return ; 
-}
+
 int main() {
     int n;
     cin>>n;
-    solveNQ(n);
-    return 0;
+    // n is the number of queen to be placed in n*n grid
+    int B[10][10]={0};
+    NQueen(B,0,n);
 }
