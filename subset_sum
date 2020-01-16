@@ -1,0 +1,44 @@
+#include <iostream>
+#include <bits/stdc++.h>
+using namespace std;
+
+int m,n,i,j,t;
+int a[10000];
+void isSubsetsum(int a[],int n,int sum,vector<int> v){
+    if(sum==0){
+        cout<<v.size()<<endl;
+        for(j=v.size()-1;j>=0;j--)
+        cout<<v[j]<<" ";
+        cout<<endl;
+        t=1;
+       return;
+
+    }
+     
+    if(n==0 && sum!=0)
+    return;
+  
+       isSubsetsum(a,n-1,sum,v);
+       v.push_back(n-1);
+       isSubsetsum(a,n-1,sum-a[n-1],v);
+}
+int main() {
+	
+	cin>>m>>n;
+	 
+	for(i=0;i<n;i++)
+	cin>>a[i];
+    for(i=m;i>=0;i--){
+        t=0;
+        isSubsetsum(a,n,i,v);
+	if(t==1){
+        cout<<"subset with sum "<<i<<endl;
+        break;
+       
+    }
+    else
+    cout<<"no subset found with sum "<<i<<endl;
+    }
+	
+	return 0;
+}
