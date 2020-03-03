@@ -1,0 +1,37 @@
+#include <iostream>
+#include <bits/stdc++.h>
+using namespace std;
+
+void subsequence(string input, string output){
+    if(input.length() == 0)
+    {
+        cout<<output<<endl;
+        return;
+    }
+    subsequence(input.substr(1), output);
+    subsequence(input.substr(1), output + input[0]);
+}
+
+// void subsequence(string s)
+// {
+//     int n = 4;
+//     int i,j,k,l;
+//     for(i=0;i<=n;i++)
+//     {
+//         for(j=0;j<=n-i;j++)
+//         {
+//             k = i+j-1;
+//             for(l=j;l<=k;l++)
+//             {
+//                 cout<<s[l];
+//             }
+//             cout<<endl;
+//         }
+//     }
+
+// }
+int main() {
+    string s = "abc";
+   
+    subsequence(s,"");
+}
