@@ -1,0 +1,108 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+bool isSafeRow(int suduko[][9], int row, int num){
+    for(int c = 0; c < 9; c++)
+    {
+        if(suduko[row][c] == num)
+        return false;
+    }
+return true;
+}
+bool isSafeCol(int suduko[][9], int col, int num){
+    for(int r = 0; r < 9; r++)
+    {
+        if(suduko[r][col] == num)
+        return false;
+    }
+return true;
+}
+bool isSafeBox(int suduko[][9], int row, int col, int num){
+    int newR = row - row%3;
+    int newC = col - col%3;
+    for(int i = newR; i < newR + 3; i++){
+    for(int j = newC; j < newC + 3; j++)
+    {
+        if(suduko[i][j] == num)
+        return false;
+    }
+    }
+return true;
+}
+bool validNum(int suduko[][9], int row, int col, int num)
+{
+    if(!isSafeRow(suduko, row, num))
+    return false;
+    if(!isSafeCol(suduko, col, num))
+    return false;
+    if(!isSafeBox(suduko, row, col, num))
+    return false;
+return true;
+}
+bool solveSuduko(int suduko[][9])
+{
+    int r = -1;
+    int c = -1;
+    bool isEmpty = false;
+    for(int i=0;i<9;i++)
+    {
+        for(int j=0;j<9;j++)
+        {
+            if(suduko[i][j] == 0)
+            {  isEmpty = true;
+              r = i;
+              c = j;
+               break;
+            }
+            if(isEmpty)
+            break;
+        }
+    }
+    if(!isEmpty)
+    return true;
+    
+    for(int n = 1; n <= 9; n++)
+    {
+        if(validNum(suduko, r, c, n))
+        {
+            suduko[r][c] = n;
+            if(solveSuduko(suduko))
+            {
+                return true;
+            }
+            suduko[r][c] = 0;
+        }
+    }
+return false;
+}
+int main()
+ {
+	int tc;
+	cin>>tc;
+	while(tc--){
+	    int suduko[9][9];
+	    for(int i = 0; i < 9; i++)
+	    {
+	        for(int j = 0; j < 9; j++)
+	        {
+	            cin>>suduko[i][j];
+	        }
+	    }
+	    bool solver = solveSuduko(suduko);
+	    if(solver)
+	    {
+	        for(int i = 0; i < 9; i++)
+	        {
+	            for(int j = 0; j < 9; j++)
+	            {
+	                cout<<suduko[i][j]<<" ";
+	            }
+	            
+	        }
+	        cout<<endl;
+	    }
+	    else
+	    cout<<"-1"<<endl;
+	}
+	return 0;
+}
