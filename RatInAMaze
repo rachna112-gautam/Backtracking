@@ -1,0 +1,37 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+void mazeHelp(int matrix[][3], int n, int sol[][3], int x, int y){
+
+   if(x == n-1 && y == n-1)
+   {   sol[x][y] = 1;
+       for(int i=0;i<n;i++)
+       {
+           for(int j=0;j<n;j++)
+           {
+               cout<<sol[i][j]<<" ";
+           }
+           cout<<endl;
+       }
+       cout<<endl;
+       return;
+   }
+   if(x > n-1 || x < 0 || y > n-1 || y < 0 || sol[x][y] == 1 || matrix[x][y] == 0)
+   return;
+    sol[x][y] = 1;
+    mazeHelp(matrix, n, sol, x-1, y);
+    mazeHelp(matrix, n, sol, x+1, y);
+    mazeHelp(matrix, n, sol, x, y-1);
+    mazeHelp(matrix, n, sol, x, y+1);
+    sol[x][y] = 0;
+}
+void Maze(int matrix[][3], int n)
+{
+    int sol[3][3] = {{0},{0}};
+    mazeHelp(matrix, n, sol, 0, 0);
+}
+int main()
+{
+    int matrix[3][3] = { {1, 1, 0},{1, 1, 1},{1, 1, 1}};
+    Maze(matrix, 3);
+}
